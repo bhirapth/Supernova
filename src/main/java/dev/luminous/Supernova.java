@@ -16,7 +16,7 @@ public final class Supernova implements ModInitializer {
     }
 
     public static final String NAME = "Supernova";
-    public static final String VERSION = "1.3.7";
+    public static final String VERSION = "3.38.2";
     public static String PREFIX = ";";
     public static final EventBus EVENT_BUS = new EventBus();
     public static ExecutorService EXECUTOR = Executors.newCachedThreadPool();
