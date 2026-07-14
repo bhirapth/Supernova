@@ -219,13 +219,13 @@ public class AutoCrystalBase extends Module {
         PlayerAndPredict self = new PlayerAndPredict(mc.player);
         if (!list.isEmpty()) {
             for (BlockPos pos : BlockUtil.getSphere((float) range.getValue() + 1)) {
-                CombatUtil.modifyPos = null;
+                CombatUtil.setModifyPos(null);
                 if (mc.player.getEyePos().distanceTo(pos.toCenterPos().add(0, -0.5, 0)) > range.getValue()) {
                     continue;
                 }
                 if (!canPlaceCrystal(pos, true, false)) continue;
-                CombatUtil.modifyPos = pos.down();
-                CombatUtil.modifyBlockState = Blocks.OBSIDIAN.getDefaultState();
+                CombatUtil.setModifyPos(pos.down());
+                CombatUtil.setModifyBlockState(Blocks.OBSIDIAN.getDefaultState());
                 if (behindWall(pos)) continue;
                 if (!canTouch(pos.down())) continue;
                 for (PlayerAndPredict pap : list) {
@@ -259,7 +259,7 @@ public class AutoCrystalBase extends Module {
                     }
                 }
             }
-            CombatUtil.modifyPos = null;
+            CombatUtil.setModifyPos(null);
             if (tempPos != null) {
                 if (!BlockUtil.canPlace(tempPos, placeRange.getValue())) {
                     tempPos = null;
@@ -321,14 +321,14 @@ public class AutoCrystalBase extends Module {
     }
 
     public float calculateDamage(BlockPos obs, Vec3d pos, PlayerEntity player, PlayerEntity predict) {
-        CombatUtil.modifyPos = obs;
-        CombatUtil.modifyBlockState = Blocks.OBSIDIAN.getDefaultState();
+        CombatUtil.setModifyPos(obs);
+        CombatUtil.setModifyBlockState(Blocks.OBSIDIAN.getDefaultState());
         if (terrainIgnore.getValue()) {
-            CombatUtil.terrainIgnore = true;
+            CombatUtil.setTerrainIgnore(true);
         }
         float damage = ExplosionUtil.calculateDamage(pos.getX(), pos.getY(), pos.getZ(), player, predict, 6);
-        CombatUtil.modifyPos = null;
-        CombatUtil.terrainIgnore = false;
+        CombatUtil.setModifyPos(null);
+        CombatUtil.setTerrainIgnore(false);
         return damage;
     }
 

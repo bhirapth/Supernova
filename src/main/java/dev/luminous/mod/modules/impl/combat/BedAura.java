@@ -404,19 +404,19 @@ public class BedAura extends Module {
 	}
 
 	public float calculateDamage(BlockPos pos, PlayerEntity player, PlayerEntity predict) {
-		CombatUtil.modifyPos = pos;
-		CombatUtil.modifyBlockState = Blocks.AIR.getDefaultState();
+		CombatUtil.setModifyPos(pos);
+		CombatUtil.setModifyBlockState(Blocks.AIR.getDefaultState());
 		float damage = calculateDamage(pos.toCenterPos(), player, predict);
-		CombatUtil.modifyPos = null;
+		CombatUtil.setModifyPos(null);
 		return damage;
 	}
 
 	public float calculateDamage(Vec3d pos, PlayerEntity player, PlayerEntity predict) {
 		if (terrainIgnore.getValue()) {
-			CombatUtil.terrainIgnore = true;
+			CombatUtil.setTerrainIgnore(true);
 		}
 		float damage = ExplosionUtil.calculateDamage(pos.getX(), pos.getY(), pos.getZ(), player, predict, 6);
-		CombatUtil.terrainIgnore = false;
+		CombatUtil.setTerrainIgnore(false);
 		return damage;
 	}
 	

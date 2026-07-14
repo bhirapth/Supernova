@@ -24,19 +24,20 @@ public abstract class MixinWorld {
             return;
         }
         if (mc.world != null && mc.world.isInBuildLimit(pos)) {
-            if (CombatUtil.terrainIgnore || CombatUtil.modifyPos != null) {
+            if (CombatUtil.isTerrainIgnore() || CombatUtil.getModifyPos() != null) {
                 WorldChunk worldChunk = mc.world.getChunk(pos.getX() >> 4, pos.getZ() >> 4);
 
                 BlockState tempState = worldChunk.getBlockState(pos);
 
-                if (CombatUtil.modifyPos != null) {
-                    if (pos.equals(CombatUtil.modifyPos)) {
-                        cir.setReturnValue(CombatUtil.modifyBlockState);
+                BlockPos modifyPos = CombatUtil.getModifyPos();
+                if (modifyPos != null) {
+                    if (pos.equals(modifyPos)) {
+                        cir.setReturnValue(CombatUtil.getModifyBlockState());
                         return;
                     }
                 }
 
-                if (CombatUtil.terrainIgnore) {
+                if (CombatUtil.isTerrainIgnore()) {
                     if (tempState.getBlock() == Blocks.OBSIDIAN
                             || tempState.getBlock() == Blocks.BEDROCK
                             || tempState.getBlock() == Blocks.ENDER_CHEST

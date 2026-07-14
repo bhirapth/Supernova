@@ -234,16 +234,16 @@ public class AutoAnchor extends Module {
 						Direction side = getClickSide(currentPos);
 						Vec3d directionVec = new Vec3d(currentPos.getX() + 0.5 + side.getVector().getX() * 0.5, currentPos.getY() + 0.5 + side.getVector().getY() * 0.5, currentPos.getZ() + 0.5 + side.getVector().getZ() * 0.5);
 						if (Alien.ROTATION.inFov(directionVec, fov.getValueFloat())) {
-							CombatUtil.modifyPos = currentPos;
-							CombatUtil.modifyBlockState = Blocks.AIR.getDefaultState();
+							CombatUtil.setModifyPos(currentPos);
+							CombatUtil.setModifyBlockState(Blocks.AIR.getDefaultState());
 							placeBlock(currentPos, rotate.getValue(), anchor);
-							CombatUtil.modifyPos = null;
+							CombatUtil.setModifyPos(null);
 						}
 					} else {
-						CombatUtil.modifyPos = currentPos;
-						CombatUtil.modifyBlockState = Blocks.AIR.getDefaultState();
+						CombatUtil.setModifyPos(currentPos);
+						CombatUtil.setModifyBlockState(Blocks.AIR.getDefaultState());
 						placeBlock(currentPos, rotate.getValue(), anchor);
-						CombatUtil.modifyPos = null;
+						CombatUtil.setModifyPos(null);
 					}
 				}
 			} else {
@@ -273,16 +273,16 @@ public class AutoAnchor extends Module {
 								Direction side = getClickSide(currentPos);
 								Vec3d directionVec = new Vec3d(currentPos.getX() + 0.5 + side.getVector().getX() * 0.5, currentPos.getY() + 0.5 + side.getVector().getY() * 0.5, currentPos.getZ() + 0.5 + side.getVector().getZ() * 0.5);
 								if (Alien.ROTATION.inFov(directionVec, fov.getValueFloat())) {
-								CombatUtil.modifyPos = currentPos;
-								CombatUtil.modifyBlockState = Blocks.AIR.getDefaultState();
+								CombatUtil.setModifyPos(currentPos);
+								CombatUtil.setModifyBlockState(Blocks.AIR.getDefaultState());
 								placeBlock(currentPos, rotate.getValue(), anchor);
-								CombatUtil.modifyPos = null;
+								CombatUtil.setModifyPos(null);
 								}
 							} else {
-								CombatUtil.modifyPos = currentPos;
-								CombatUtil.modifyBlockState = Blocks.AIR.getDefaultState();
+								CombatUtil.setModifyPos(currentPos);
+								CombatUtil.setModifyBlockState(Blocks.AIR.getDefaultState());
 								placeBlock(currentPos, rotate.getValue(), anchor);
-								CombatUtil.modifyPos = null;
+								CombatUtil.setModifyPos(null);
 							}
 						}
 					}
@@ -325,10 +325,10 @@ public class AutoAnchor extends Module {
 				for (BlockPos pos : getSphere(range.getValueFloat())) {
 					for (PlayerAndPredict pap : list) {
 						if (light.getValue()) {
-							CombatUtil.modifyPos = pos;
-							CombatUtil.modifyBlockState = Blocks.AIR.getDefaultState();
+							CombatUtil.setModifyPos(pos);
+							CombatUtil.setModifyBlockState(Blocks.AIR.getDefaultState());
 							boolean skip = !canSee(pos.toCenterPos(), pap.predict.getPos());
-							CombatUtil.modifyPos = null;
+							CombatUtil.setModifyPos(null);
 							if (skip) continue;
 						}
 
@@ -336,10 +336,10 @@ public class AutoAnchor extends Module {
 							if (anchorFound) continue;
 							if (!canPlace(pos, range.getValue(), breakCrystal.getValue())) continue;
 
-							CombatUtil.modifyPos = pos;
-							CombatUtil.modifyBlockState = Blocks.OBSIDIAN.getDefaultState();
+							CombatUtil.setModifyPos(pos);
+							CombatUtil.setModifyBlockState(Blocks.OBSIDIAN.getDefaultState());
 							boolean skip = BlockUtil.getClickSideStrict(pos) == null;
-							CombatUtil.modifyPos = null;
+							CombatUtil.setModifyPos(null);
 							if (skip) continue;
 
 							double damage = getAnchorDamage(pos, pap.player, pap.predict);
@@ -383,10 +383,10 @@ public class AutoAnchor extends Module {
 	}
 	public double getAnchorDamage(BlockPos anchorPos, PlayerEntity target, PlayerEntity predict) {
 		if (terrainIgnore.getValue()) {
-			CombatUtil.terrainIgnore = true;
+			CombatUtil.setTerrainIgnore(true);
 		}
 		double damage = ExplosionUtil.anchorDamage(anchorPos, target, predict);
-		CombatUtil.terrainIgnore = false;
+		CombatUtil.setTerrainIgnore(false);
 		return damage;
 	}
 	public void placeBlock(BlockPos pos, boolean rotate, int slot) {

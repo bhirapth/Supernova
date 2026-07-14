@@ -174,8 +174,8 @@ public class AutoPush extends Module {
             if (BlockUtil.clientCanPlace(piston)) {
                 boolean canPower = false;
                 if (BlockUtil.getPlaceSide(piston, placeRange.getValue()) != null) {
-                    CombatUtil.modifyPos = piston;
-                    CombatUtil.modifyBlockState = Blocks.PISTON.getDefaultState();
+                    CombatUtil.setModifyPos(piston);
+                    CombatUtil.setModifyBlockState(Blocks.PISTON.getDefaultState());
                     for (Direction i : Direction.values()) {
                         if (getBlock(piston.offset(i)) == getBlockType()) {
                             canPower = true;
@@ -188,7 +188,7 @@ public class AutoPush extends Module {
                             canPower = true;
                         }
                     }
-                    CombatUtil.modifyPos = null;
+                    CombatUtil.setModifyPos(null);
 
                     if (canPower) {
                         int pistonSlot = findClass(PistonBlock.class);
@@ -248,12 +248,12 @@ public class AutoPush extends Module {
                     for (Direction i : Direction.values()) {
                         if (i == Direction.UP && torch.getValue()) continue;
                         if (powerFacing != null) break;
-                        CombatUtil.modifyPos = piston.offset(i);
-                        CombatUtil.modifyBlockState = getBlockType().getDefaultState();
+                        CombatUtil.setModifyPos(piston.offset(i));
+                        CombatUtil.setModifyBlockState(getBlockType().getDefaultState());
                         if (BlockUtil.getPlaceSide(piston) != null) {
                             powerFacing = i;
                         }
-                        CombatUtil.modifyPos = null;
+                        CombatUtil.setModifyPos(null);
                         if (powerFacing != null && !BlockUtil.canPlace(piston.offset(powerFacing))) {
                             powerFacing = null;
                         }
@@ -273,8 +273,8 @@ public class AutoPush extends Module {
                             PacketMine.INSTANCE.mine(piston.offset(powerFacing));
                         }*/
 
-                        CombatUtil.modifyPos = piston.offset(powerFacing);
-                        CombatUtil.modifyBlockState = getBlockType().getDefaultState();
+                        CombatUtil.setModifyPos(piston.offset(powerFacing));
+                        CombatUtil.setModifyBlockState(getBlockType().getDefaultState());
                         int pistonSlot = findClass(PistonBlock.class);
                         Direction side = BlockUtil.getPlaceSide(piston);
                         if (side != null) {
@@ -294,7 +294,7 @@ public class AutoPush extends Module {
                                 Alien.ROTATION.snapBack();
                             }
                         }
-                        CombatUtil.modifyPos = null;
+                        CombatUtil.setModifyPos(null);
                         return true;
                     }
                 }

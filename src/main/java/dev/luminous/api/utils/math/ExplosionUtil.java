@@ -29,10 +29,10 @@ import java.util.ArrayList;
 public class ExplosionUtil implements Wrapper {
     public static float anchorDamage(BlockPos pos, PlayerEntity target, PlayerEntity predict){
         if (BlockUtil.getBlock(pos) == Blocks.RESPAWN_ANCHOR) {
-            CombatUtil.modifyPos = pos;
-            CombatUtil.modifyBlockState = Blocks.AIR.getDefaultState();
+            CombatUtil.setModifyPos(pos);
+            CombatUtil.setModifyBlockState(Blocks.AIR.getDefaultState());
             float damage = calculateDamage(pos.toCenterPos().getX(), pos.toCenterPos().getY(), pos.toCenterPos().getZ(), target, predict, 5);
-            CombatUtil.modifyPos = null;
+            CombatUtil.setModifyPos(null);
             return damage;
         } else {
             return calculateDamage(pos.toCenterPos().getX(), pos.toCenterPos().getY(), pos.toCenterPos().getZ(), target, predict, 5);

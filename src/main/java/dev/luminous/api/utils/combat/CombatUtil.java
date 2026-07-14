@@ -21,8 +21,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CombatUtil implements Wrapper {
+    private static final ThreadLocal<Boolean> TL_TERRAIN_IGNORE = ThreadLocal.withInitial(() -> false);
+    private static final ThreadLocal<BlockPos> TL_MODIFY_POS = new ThreadLocal<>();
+    private static final ThreadLocal<BlockState> TL_MODIFY_BLOCK_STATE = ThreadLocal.withInitial(() -> Blocks.AIR.getDefaultState());
+
+    public static void setTerrainIgnore(boolean value) { TL_TERRAIN_IGNORE.set(value); }
+    public static boolean isTerrainIgnore() { return TL_TERRAIN_IGNORE.get(); }
+    public static void setModifyPos(BlockPos pos) { TL_MODIFY_POS.set(pos); }
+    public static BlockPos getModifyPos() { return TL_MODIFY_POS.get(); }
+    public static void setModifyBlockState(BlockState state) { TL_MODIFY_BLOCK_STATE.set(state); }
+    public static BlockState getModifyBlockState() { return TL_MODIFY_BLOCK_STATE.get(); }
+
+    @Deprecated
     public static boolean terrainIgnore = false;
+    @Deprecated
     public static BlockPos modifyPos;
+    @Deprecated
     public static BlockState modifyBlockState = Blocks.AIR.getDefaultState();
     public static final Timer breakTimer = new Timer();
     public static List<PlayerEntity> getEnemies(double range) {
